@@ -9,6 +9,7 @@
                                                  \/__/ 
 
 Nick Walker
+Current Version: 1.3
 
 This script simulates the interaction of celestial objects in an n-body system.
 	
@@ -27,6 +28,9 @@ Working Components:
 	Material switching
 	Mass manipulation of star
 	Add/Subtract celestial bodies
+	Add/Subtract massive meteors
+	Drag and Drop celestial objects
+	Camera centers on star
 	
 Execution:
 	Run the script and use the commands detailed in the console window
