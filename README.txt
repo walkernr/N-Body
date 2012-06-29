@@ -12,7 +12,7 @@
 	 
 	 
 Nick Walker
-Current Version: 1.3
+Current Version: 1.6
 
 This script simulates the interaction of celestial objects in an n-body system.
 	
@@ -23,7 +23,6 @@ Requirements:
 Working Components:
 	Gravitation between multiple objects
 	Collisions
-	Rotation
 	Trail mapping
 	Color changing
 	Trajectory reversal
@@ -42,7 +41,7 @@ Controls:
 	a: add planet
 	s: remove the last added object, does not remove star
 	k: add meteor, incredibly massive, can knock star out of place
-	r: reverse the orbits of the planets, essentially, everything related to motion is negated
+	r: reverse the orbits of the planets
 	t: toggle whether trails are shown or not
 	p: pause/play the simulation
 	m: toggle whether or not objects use textures
