@@ -1,3 +1,5 @@
+#Nick Walker	15/7/2012	N-Body
+
 from visual import *
 from random import *
 import py_compile
@@ -18,6 +20,7 @@ starmass=[float(1e10)]
 stardensity=[float(1e5)]
 starposition=[vector(0.,0.,0.)]
 starmomentum=[vector(0.,0.,0.)]
+starrotation=[pi/7500]
 starstatus=[True]
 objects=[sphere(radius=sqrt(starmass[0]*3/4/stardensity[0]/pi),pos=starposition[0],make_trail=True,interval=10,color=color.yellow)]
 objects[0].trail_object.color=color.yellow
@@ -28,6 +31,7 @@ mass=array(starmass)
 density=array(stardensity)
 position=array(starposition)
 momentum=array(starmomentum)
+rotation=array(starrotation)
 status=array(starstatus)
 radius=array(starradius)
 
@@ -55,6 +59,7 @@ while 1:
 		
 		for n in range(mass.__len__()):
 			objects[n].pos=position[n]
+			objects[n].rotate(angle=rotation[n],axis=(0,1,0))
 			
 		totalmass=0.
 		for n in range(mass.__len__()):
@@ -73,6 +78,7 @@ while 1:
 				centerofmassvelocity+=momentum[n]
 		centerofmassvelocity=centerofmassvelocity/totalmass
 			
+		########Modify for deletion rather than hiding########
 		for ij in collisionlist:
 			i,j=divmod(ij,len(objects))
 			if not objects[i].visible: continue
@@ -169,12 +175,14 @@ while 1:
 			density=resize(density,(len(density)+1,1))
 			position=resize(position,(len(position)+1,3))
 			momentum=resize(momentum,(len(momentum)+1,3))
+			rotation=resize(rotation,(len(rotation)+1,1))
 			status=resize(status,(len(status)+1,1))
 			radius=resize(radius,(len(radius)+1,1))
 			rot=0.
 			nposition=vector(ct*randint(int(1.5*r),int(2*r)),0.,0.)
 			mass[len(mass)-1]=1e10
 			density[len(density)-1]=1e5
+			rotation[len(density)-1]=pi/7500
 			status[len(status)-1]=True
 			objects.append(sphere(radius=objects[0].radius,pos=objects[0].pos,make_trail=True,interval=10,color=objects[0].color))
 			objects[len(objects)-1].trail_object.color=objects[len(objects)-1].color
@@ -201,14 +209,16 @@ while 1:
 			density=resize(density,(len(density)+1,1))
 			position=resize(position,(len(position)+1,3))
 			momentum=resize(momentum,(len(momentum)+1,3))
+			rotation=resize(rotation,(len(rotation)+1,1))
 			status=resize(status,(len(status)+1,1))
 			radius=resize(radius,(len(radius)+1,1))
 			nposition=rotate(vector(20*r,0.,0.),angle=randint(0,360)*pi/180,axis=(0,1,0))+centerofmass
 			mass[len(mass)-1]=randint(1e4,1e8)
 			density[len(density)-1]=randint(1e3,1e4)
 			position[len(position)-1]=nposition
-			velocity=.25*ct*rotate(-norm(nposition-centerofmass),angle=ct*randint(-5,5)*pi/180,axis=(0,1,0))
+			velocity=randint(80,120)/100.*.25*ct*rotate(-norm(nposition-centerofmass),angle=ct*randint(-5,5)*pi/180,axis=(0,1,0))
 			momentum[len(momentum)-1]=mass[len(mass)-1]*velocity
+			rotation[len(rotation)-1]=randint(80,120)/100.*pi/7500
 			status[len(status)-1]=False
 			objects.append(sphere(radius=sqrt((mass[mass.__len__()-1]*3/4/density[density.__len__()-1]/pi)),pos=position[position.__len__()-1],make_trail=True,interval=10))
 			radius[len(radius)-1]=objects[len(objects)-1].radius
@@ -228,15 +238,17 @@ while 1:
 			density=resize(density,(len(density)+1,1))
 			position=resize(position,(len(position)+1,3))
 			momentum=resize(momentum,(len(momentum)+1,3))
+			rotation=resize(rotation,(len(rotation)+1,1))
 			status=resize(status,(len(status)+1,1))
 			radius=resize(radius,(len(radius)+1,1))
-			x=randint(2*int(r),5*int(r))
+			x=randint(2*int(r),8*int(r))
 			nposition=rotate(vector(x,0.,0.),angle=randint(0,360)*pi/180.,axis=(0,1,0))+centerofmass
 			mass[len(mass)-1]=randint(1,1e5)
 			density[len(density)-1]=randint(5,15)
 			position[len(position)-1]=nposition
-			velocity=sqrt(g*ct*mass[0]/mag(nposition-centerofmass))*rotate(norm(nposition-centerofmass),angle=pi/2,axis=(0,1,0))+centerofmassvelocity
+			velocity=randint(80,120)/100.*sqrt(g*ct*mass[0]/mag(nposition-centerofmass))*rotate(norm(nposition-centerofmass),angle=pi/2,axis=(0,1,0))+centerofmassvelocity
 			momentum[len(momentum)-1]=mass[len(mass)-1]*velocity
+			rotation[len(rotation)-1]=randint(80,120)/100.*pi/7500
 			status[len(status)-1]=False
 			objects.append(sphere(radius=sqrt((mass[mass.__len__()-1]*3/4/density[density.__len__()-1]/pi)),pos=position[position.__len__()-1],make_trail=True,interval=10))
 			radius[len(radius)-1]=objects[len(objects)-1].radius
